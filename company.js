@@ -255,8 +255,9 @@ export async function addCompanyToCompanyCore(company, cif, anafData, careersPag
     console.error("Failed to add company to Company Core:", err.message);
   }
 
-  fs.writeFileSync("company_core.json", JSON.stringify(companyCoreData, null, 2), "utf-8");
-  console.log("Saved company_core.json");
+  fs.mkdirSync("tmp", { recursive: true });
+  fs.writeFileSync("tmp/company_core.json", JSON.stringify(companyCoreData, null, 2), "utf-8");
+  console.log("Saved tmp/company_core.json");
 
   return companyCoreData;
 }
