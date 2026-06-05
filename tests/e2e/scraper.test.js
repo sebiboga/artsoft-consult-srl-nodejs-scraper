@@ -1,0 +1,192 @@
+import { jest } from '@jest/globals';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fetch from 'node-fetch';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.resolve(__dirname, '../../.env.local') });
+
+const HAS_SOLR = !!process.env.SOLR_AUTH;
+
+function itIfSolr(name, fn, timeout) {
+  if (HAS_SOLR) {
+    return it(name, fn, timeout);
+  }
+  return it.skip(`${name} (skipped: SOLR_AUTH not set)`, fn, timeout);
+}
+
+beforeAll(() => {
+  if (HAS_SOLR) {
+    process.env.SOLR_AUTH = process.env.SOLR_AUTH;
+  }
+});
+
+const TEST_CIF = '15997630';
+const TEST_BRAND = 'ARTSOFT CONSULT';
+const ARTSOFT_CAREERS_URL = 'https://www.artsoft-consult.ro/careers/job-openings';
+
+describe('E2E: Full Scraping Pipeline', () => {
+
+  describe('ArtSoft Careers Page — Real Data Fetch', () => {
+    let html;
+
+    beforeAll(async () => {
+      const res = await fetch(ARTSOFT_CAREERS_URL, {
+        headers: {
+          'User-Agent': 'job_seeker_ro_spider',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+        }
+      });
+      html = await res.text();
+    }, 15000);
+
+    it('should fetch the careers page successfully', () => {
+      expect(html.length).toBeGreaterThan(0);
+      expect(html).toContain('single-job-container');
+    });
+
+    it('should contain at least one job listing', () => {
+      const jobCount = (html.match(/single-job-container/g) || []).length;
+      expect(jobCount).toBeGreaterThan(0);
+    });
+  });
+
+  describe('Parse + Transform Pipeline', () => {
+    let index;
+    let html;
+
+    beforeAll(async () => {
+      index = await import('../../index.js');
+      const res = await fetch(ARTSOFT_CAREERS_URL, {
+        headers: {
+          'User-Agent': 'job_seeker_ro_spider',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+        }
+      });
+      html = await res.text();
+    }, 15000);
+
+    it('should parse real careers page into standardized format', () => {
+      const jobs = index.parseJobs(html);
+
+      expect(Array.isArray(jobs)).toBe(true);
+      expect(jobs.length).toBeGreaterThan(0);
+
+      const parsed = jobs[0];
+      expect(parsed).toHaveProperty('url');
+      expect(parsed.url).toMatch(/^https:\/\/www\.artsoft-consult\.ro\//);
+      expect(parsed).toHaveProperty('title');
+      expect(parsed).toHaveProperty('location');
+      expect(Array.isArray(parsed.location)).toBe(true);
+      expect(parsed).toHaveProperty('workmode');
+    });
+
+    it('should map parsed jobs to job model', () => {
+      const jobs = index.parseJobs(html);
+      const model = index.mapToJobModel(jobs[0], TEST_CIF);
+
+      expect(model).toHaveProperty('url');
+      expect(model).toHaveProperty('title');
+      expect(model).toHaveProperty('company');
+      expect(model).toHaveProperty('cif', TEST_CIF);
+      expect(model).toHaveProperty('status', 'scraped');
+      expect(model).toHaveProperty('date');
+    });
+
+    it('should transform jobs and produce valid output', () => {
+      const rawJobs = index.parseJobs(html);
+      const jobs = rawJobs.map(j => index.mapToJobModel(j, TEST_CIF));
+
+      const payload = {
+        source: 'artsoft-consult.ro',
+        company: 'ARTSOFT CONSULT SRL',
+        cif: TEST_CIF,
+        jobs
+      };
+
+      const transformed = index.transformJobsForSOLR(payload);
+
+      expect(transformed.company).toBe('ARTSOFT CONSULT SRL');
+      expect(transformed.jobs.length).toBe(jobs.length);
+
+      for (const job of transformed.jobs) {
+        expect(job).toHaveProperty('location');
+        expect(Array.isArray(job.location)).toBe(true);
+        expect(job.location.length).toBeGreaterThan(0);
+        expect(job.workmode).toMatch(/^(remote|on-site|hybrid)$/);
+      }
+    });
+
+    it('should produce valid job URLs that are accessible', async () => {
+      const jobs = index.parseJobs(html);
+
+      for (const job of jobs.slice(0, 2)) {
+        const res = await fetch(job.url, {
+          method: 'HEAD',
+          headers: { 'User-Agent': 'job_seeker_ro_spider' }
+        });
+        expect(res.ok).toBe(true);
+      }
+    }, 30000);
+  });
+
+  describe('Company Validation Path', () => {
+    let anaf;
+    let company;
+
+    beforeAll(async () => {
+      anaf = await import('../../src/anaf.js');
+      company = await import('../../company.js');
+    });
+
+    it('should find ARTSOFT CONSULT in ANAF and validate active status', async () => {
+      const results = await anaf.searchCompany(TEST_BRAND);
+
+      const artsoft = results.find(c =>
+        c.name.toUpperCase().includes('ARTSOFT') &&
+        c.statusLabel === 'Funcțiune'
+      );
+      expect(artsoft).toBeDefined();
+      expect(artsoft.cui.toString()).toBe(TEST_CIF);
+
+      const anafData = await anaf.getCompanyFromANAF(TEST_CIF);
+      expect(anafData).toBeDefined();
+      expect(anafData.inactive).toBe(false);
+    }, 30000);
+
+    itIfSolr('should run full validation and report active status', async () => {
+      const result = await company.validateAndGetCompany();
+
+      expect(result.status).toBe('active');
+      expect(result.company).toBe('ARTSOFT CONSULT SRL');
+      expect(result.cif).toBe(TEST_CIF);
+    }, 30000);
+  });
+
+  describe('SOLR Data Verification', () => {
+    let solr;
+
+    beforeAll(async () => {
+      solr = await import('../../solr.js');
+    });
+
+    itIfSolr('should have Artsoft jobs in SOLR with correct company name', async () => {
+      const result = await solr.querySOLR(TEST_CIF);
+
+      for (const job of result.docs) {
+        expect(job.company).toBe('ARTSOFT CONSULT SRL');
+        expect(job.cif).toBe(TEST_CIF);
+      }
+    }, 15000);
+
+    itIfSolr('should have Artsoft company core entry', async () => {
+      const result = await solr.queryCompanySOLR(`id:${TEST_CIF}`);
+
+      expect(result.numFound).toBe(1);
+      const company = result.docs[0];
+      expect(company.company).toBe('ARTSOFT CONSULT SRL');
+      expect(company.status).toBe('activ');
+    }, 15000);
+  });
+});
