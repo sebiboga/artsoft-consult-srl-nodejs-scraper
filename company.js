@@ -233,21 +233,19 @@ export async function addCompanyToCompanyCore(company, cif, anafData, careersPag
 
   const now = new Date().toISOString();
 
-  const companyCoreData = [
-    {
-      id: cif,
-      company: company,
-      brand: COMPANY_BRAND,
-      status: anafData?.inactive ? "inactiv" : "activ",
-      location: [
-        anafData?.headquartersAddress?.locality || "Cluj-Napoca"
-      ].filter(Boolean),
-      website: ["https://www.artsoft-consult.ro"],
-      career: [careersPage || "https://www.artsoft-consult.ro/careers/job-openings"],
-      lastScraped: now,
-      scraperFile: "https://raw.githubusercontent.com/sebiboga/artsoft-consult-srl-nodejs-scraper/main/.github/workflows/scrape.yml"
-    }
-  ];
+  const companyCoreData = {
+    id: cif,
+    company: company,
+    brand: COMPANY_BRAND,
+    status: anafData?.inactive ? "inactiv" : "activ",
+    location: [
+      anafData?.headquartersAddress?.locality || "Cluj-Napoca"
+    ].filter(Boolean),
+    website: ["https://www.artsoft-consult.ro"],
+    career: [careersPage || "https://www.artsoft-consult.ro/careers/job-openings"],
+    lastScraped: now,
+    scraperFile: "https://raw.githubusercontent.com/sebiboga/artsoft-consult-srl-nodejs-scraper/main/.github/workflows/scrape.yml"
+  };
 
   try {
     const { upsertCompany } = await import("./solr.js");
