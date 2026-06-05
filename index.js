@@ -136,8 +136,9 @@ async function main() {
 
     if (scrapedCount === 0) {
       console.log("No jobs found on careers page.");
-      fs.writeFileSync("jobs.json", JSON.stringify({ jobs: [], message: "No jobs found" }, null, 2), "utf-8");
-      console.log("Saved jobs.json");
+      fs.mkdirSync("tmp", { recursive: true });
+      fs.writeFileSync("tmp/jobs.json", JSON.stringify({ jobs: [], message: "No jobs found" }, null, 2), "utf-8");
+      console.log("Saved tmp/jobs.json");
       return;
     }
 
@@ -154,8 +155,9 @@ async function main() {
     console.log("Transforming jobs for SOLR...");
     const transformedPayload = transformJobsForSOLR(payload);
 
-    fs.writeFileSync("jobs.json", JSON.stringify(transformedPayload, null, 2), "utf-8");
-    console.log("Saved jobs.json");
+    fs.mkdirSync("tmp", { recursive: true });
+    fs.writeFileSync("tmp/jobs.json", JSON.stringify(transformedPayload, null, 2), "utf-8");
+    console.log("Saved tmp/jobs.json");
 
     console.log("Step 4: Upsert jobs to SOLR...");
     await upsertJobs(transformedPayload.jobs);
