@@ -27,7 +27,11 @@ const COMPANY_MODEL_FIELDS = [
 async function getCompanyFromPeviitor(companyName) {
   const url = `${Peviitor_API_URL}?name=${encodeURIComponent(companyName)}`;
   const res = await fetch(url, {
-    headers: { "User-Agent": "job_seeker_ro_spider" }
+    headers: {
+      "User-Agent": "job_seeker_ro_spider",
+      "origin": "https://peviitor.ro",
+      "referer": "https://peviitor.ro/"
+    }
   });
 
   if (!res.ok) {
@@ -101,17 +105,17 @@ function saveCompanyData(anafData, peviitorData) {
     }
   };
 
-  fs.writeFileSync("company.json", JSON.stringify(companyData, null, 2), "utf-8");
-  console.log("\n✅ Saved company data to company.json");
-  console.log("This file can be used to restore company details if SOLR data is lost.\n");
+  fs.mkdirSync("tmp", { recursive: true });
+  fs.writeFileSync("tmp/company.json", JSON.stringify(companyData, null, 2), "utf-8");
+  console.log("\n✅ Saved company data to tmp/company.json");
 
   return companyData;
 }
 
 function loadCachedCompanyData() {
-  if (fs.existsSync("company.json")) {
+  if (fs.existsSync("tmp/company.json")) {
     try {
-      const data = JSON.parse(fs.readFileSync("company.json", "utf-8"));
+      const data = JSON.parse(fs.readFileSync("tmp/company.json", "utf-8"));
       if (data?.anaf?.cui && data?.anaf?.name) {
         console.log("Found cached company data in company.json");
         return data;
