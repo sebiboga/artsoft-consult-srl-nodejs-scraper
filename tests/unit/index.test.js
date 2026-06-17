@@ -164,6 +164,32 @@ describe('index.js Component Tests', () => {
     });
   });
 
+  describe('parseInternshipPage', () => {
+    it('should return internship entry when page has Internship h1', () => {
+      const html = '<html><body><h1>Internship</h1><p>Program description</p></body></html>';
+      const result = index.parseInternshipPage(html);
+      expect(result).toHaveLength(1);
+      expect(result[0].title).toBe('Internship');
+      expect(result[0].url).toContain('internship-cv');
+      expect(result[0].workmode).toBe('on-site');
+      expect(result[0].location).toContain('Cluj-Napoca');
+      expect(result[0].tags).toContain('internship');
+    });
+
+    it('should return empty array when html is null', () => {
+      expect(index.parseInternshipPage(null)).toEqual([]);
+    });
+
+    it('should return empty array when no Internship h1 found', () => {
+      const html = '<html><body><h1>Job Openings</h1></body></html>';
+      expect(index.parseInternshipPage(html)).toEqual([]);
+    });
+
+    it('should return empty array for empty html', () => {
+      expect(index.parseInternshipPage('')).toEqual([]);
+    });
+  });
+
   describe('URL Generation', () => {
     it('should use full URL when href is absolute', () => {
       const html = `

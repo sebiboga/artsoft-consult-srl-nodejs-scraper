@@ -10,6 +10,8 @@ import companyConfig from "./config/company.js";
 const COMPANY_CIF = companyConfig.cif;
 const JOB_BASE = companyConfig.apiBase;
 const CAREER_URL = companyConfig.careerUrl;
+const INTERNSHIP_URL = companyConfig.internshipUrl;
+const INTERNSHIP_APPLY_URL = companyConfig.internshipApplyUrl;
 
 const TIMEOUT = 10000;
 
@@ -95,6 +97,50 @@ async function scrapeAllListings(_testOnlyOnePage = false) {
 
   console.log(`Total unique jobs collected: ${unique.length}`);
   return unique;
+}
+
+function parseInternshipPage(html) {
+  if (!html) return [];
+
+  const $ = cheerio.load(html);
+  if (!$("h1:contains('Internship')").length) return [];
+
+  return [{
+    url: INTERNSHIP_APPLY_URL,
+    title: "Internship",
+    workmode: "on-site",
+    location: [companyConfig.defaultLocation],
+    tags: ["internship"]
+  }];
+}
+
+async function scrapeInternship() {
+  try {
+    const res = await fetch(INTERNSHIP_URL, {
+      headers: {
+        "User-Agent": "job_seeker_ro_spider",
+        "Accept": "text/html"
+      },
+      signal: AbortSignal.timeout(TIMEOUT)
+    });
+
+    if (!res.ok) {
+      console.log(`ℹ️ Internship page not available (HTTP ${res.status})`);
+      return [];
+    }
+
+    const jobs = parseInternshipPage(await res.text());
+    if (jobs.length > 0) {
+      console.log("✅ Internship program active - adding internship listing");
+    } else {
+      console.log("ℹ️ Internship page structure unexpected - skipping");
+    }
+    return jobs;
+
+  } catch (err) {
+    console.log(`ℹ️ Internship page unavailable (${err.message})`);
+    return [];
+  }
 }
 
 function mapToJobModel(rawJob, cif, companyName = COMPANY_NAME) {
@@ -197,11 +243,13 @@ async function main() {
     }
 
     const rawJobs = await scrapeAllListings(testOnlyOnePage);
-    const scrapedCount = rawJobs.length;
+    const internshipJobs = await scrapeInternship();
+    const allJobs = [...rawJobs, ...internshipJobs];
+    const scrapedCount = allJobs.length;
     console.log(`📊 Jobs scraped from ArtSoft Consult website: ${scrapedCount}`);
 
     console.log("=== Step 3: Remove expired jobs from SOLR ===");
-    const scrapedUrls = new Set(rawJobs.map(j => j.url));
+    const scrapedUrls = new Set(allJobs.map(j => j.url));
     if (scrapedUrls.size > 0) {
       const existingJobsResult = await querySOLR(COMPANY_CIF);
       const existingJobs = existingJobsResult.docs || [];
@@ -221,7 +269,7 @@ async function main() {
       console.log("⚠️ No jobs scraped - skipping expiry check");
     }
 
-    const jobs = rawJobs.map(job => mapToJobModel(job, localCif));
+    const jobs = allJobs.map(job => mapToJobModel(job, localCif));
 
     const payload = {
       source: "artsoft-consult.ro",
@@ -263,7 +311,7 @@ async function main() {
     const finalResult = await querySOLR(COMPANY_CIF);
     console.log(`\n📊 === SUMMARY ===`);
     console.log(`📊 Jobs existing in SOLR before scrape: ${existingCount}`);
-    console.log(`📊 Jobs scraped from website: ${scrapedCount}`);
+    console.log(`📊 Jobs scraped from website: ${scrapedCount} (${rawJobs.length} regular + ${internshipJobs.length} internship)`);
     console.log(`📊 Jobs in SOLR after scrape: ${finalResult.numFound}`);
     console.log(`====================`);
 
@@ -276,7 +324,7 @@ async function main() {
   }
 }
 
-export { parseHtmlJobs, mapToJobModel, transformJobsForSOLR };
+export { parseHtmlJobs, parseInternshipPage, mapToJobModel, transformJobsForSOLR, scrapeInternship };
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   main();
