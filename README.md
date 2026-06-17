@@ -126,6 +126,16 @@ npm run test:integration
 npm run test:e2e
 ```
 
+## Derived Scrapers
+
+Acest template a fost folosit cu succes pentru a deriva scraper-e pentru alte companii din ecosistemul peviitor.ro:
+
+| Repo | Companie | CIF | Metodă | Status |
+|------|----------|-----|--------|--------|
+| [mejix-srl-nodejs-scraper](https://github.com/sebiboga/mejix-srl-nodejs-scraper) | MEJIX SRL | 17372688 | HTML scraping (cheerio) | ✅ Live |
+| [talent-matchmakers-srl-nodejs-scraper](https://github.com/sebiboga/talent-matchmakers-srl-nodejs-scraper) | TALENT MATCHMAKERS S.R.L. | 38460545 | Teamtailor HTML (cheerio) | ✅ Live |
+| [artsoft-consult-srl-nodejs-scraper](https://github.com/sebiboga/artsoft-consult-srl-nodejs-scraper) | ARTSOFT CONSULT SRL | 15997630 | HTML scraping (cheerio) | ✅ Live |
+
 ## Derived From
 
 Acest scraper este derivat din [template-ul de referință](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper), template-ul de referință pentru toate scraper-ele Node.js din ecosistemul peviitor.ro.
