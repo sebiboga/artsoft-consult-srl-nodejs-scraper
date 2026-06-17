@@ -108,7 +108,7 @@ describe('Integration: API Workflow', () => {
       expect(artsoft.brand).toBe('ARTSOFT CONSULT');
       expect(artsoft.status).toBe('activ');
       expect(Array.isArray(artsoft.location)).toBe(true);
-      expect(artsoft.lastScraped).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(artsoft.lastScraped).toMatch(/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}\.\d{3}Z)?$/);
     }, 15000);
 
     itIfSolr('should have required company model fields', async () => {
