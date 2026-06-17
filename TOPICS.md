@@ -1,29 +1,23 @@
-# TOPICS.md — Repository GitHub Topics
+# TOPICS.md — Required GitHub Topics
 
-Toate scraper-urile derivate din acest template **MUST** avea **EXACT 2 topic-uri**:
+All scrapers derived from the EPAM template **MUST** have these two topics set on the GitHub repo:
 
-| Topic | Descriere |
-|-------|-----------|
-| `job-seeker-ro-spider` | Numele scraperului (User-Agent-ul folosit în toate request-urile HTTP) |
-| `peviitor-ro` | Platforma pentru care se face scraping-ul |
+## Required Topics
 
-## Reguli stricte
+1. `job-seeker-ro-spider`
+2. `peviitor-ro`
 
-1. **EXACT 2 topic-uri** — NICIUN topic în plus, NICIUN topic lipsă.
-2. Litere mici, cifre și **hyphens** (`-`) — underscore (`_`) nu e permis.
-3. Maxim 50 de caractere per topic.
-4. Orice abatere trebuie discutată în GitHub Issues înainte.
-
-## Cum verifici
+## How to Add Topics
 
 ```bash
-gh repo view <owner>/<repo> --json repositoryTopics
+gh api repos/sebiboga/artsoft-consult-srl-nodejs-scraper/topics \
+  -X PUT \
+  -f names='["job-seeker-ro-spider","peviitor-ro"]'
 ```
 
-## Cum setezi
+## Why?
 
-```bash
-gh repo edit <owner>/<repo> --add-topic job-seeker-ro-spider --add-topic peviitor-ro
-```
+- `job-seeker-ro-spider` — identifies this as a member of the scraper ecosystem
+- `peviitor-ro` — identifies the target platform
 
-sau manual pe `https://github.com/<owner>/<repo>/settings`.
+The consistency test `tests/consistency/topics.test.js` verifies both topics are set.

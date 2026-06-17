@@ -1,22 +1,20 @@
-# Issues
+# Issues & Work Tracking
 
-Acest proiect folosește [GitHub Issues](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper/issues) pentru a urmări munca.
+Acest proiect folosește [GitHub Issues](https://github.com/sebiboga/artsoft-consult-srl-nodejs-scraper/issues) pentru a urmări munca.
 
-## Regulă
+## Rules
 
-**Orice modificare de cod trebuie să aibă un issue corespunzător în GitHub Issues.**
+- Orice modificare de cod trebuie să aibă un issue în GitHub Issues
+- Excepții: typo-uri, whitespace, documentație minoră
+- Commit messages trebuie să conțină referința la issue (ex: "fixes #12")
+- Issues noi se deschid pentru: bug-uri, feature-uri, refactorizări, întrebări
 
-Excepții:
-- Corecturi minore (typo-uri, whitespace, comentarii)
-- Changeset-uri care rezolvă un issue existent
+## Issue Labels
 
-## Flux
+- `bug` - Ceva nu funcționează corect
+- `enhancement` - Cerere de feature nou
+- `documentation` - îmbunătățiri ale documentației
+- `good first issue` - Bun pentru începători
+- `help wanted` - Ajutor suplimentar necesar
 
-1. Creăm un issue care descrie ce trebuie făcut
-2. Implementăm modificarea
-3. Commit-ul menționează issue-ul (ex: `#7`)
-4. Închidem issue-ul cu un comentariu care link-uiește commit-ul
-
-## Issue-uri deschise
-
-Vezi [toate issue-urile](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper/issues).
+Vezi [toate issue-urile](https://github.com/sebiboga/artsoft-consult-srl-nodejs-scraper/issues).

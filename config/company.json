@@ -1,11 +1,11 @@
 {
-  "cif": "33159615",
-  "legalName": "EPAM SYSTEMS INTERNATIONAL SRL",
-  "brand": "EPAM",
-  "website": "https://www.epam.com",
-  "careerUrl": "https://careers.epam.com",
-  "apiBase": "https://careers.epam.com",
-  "apiCountryId": "8150000000000001155",
-  "defaultLocation": "București",
-  "scraperFile": "https://raw.githubusercontent.com/sebiboga/epam-systems-international-srl-nodejs-scraper/main/.github/workflows/job-seeker-ro-spider.yml"
+  "cif": "15997630",
+  "legalName": "ART SOFT CONSULT SRL",
+  "brand": "ArtSoft Consult",
+  "website": "https://www.artsoft-consult.ro",
+  "careerUrl": "https://www.artsoft-consult.ro/careers/job-openings",
+  "apiBase": "https://www.artsoft-consult.ro",
+  "apiCountryId": "",
+  "defaultLocation": "Cluj-Napoca",
+  "scraperFile": "https://raw.githubusercontent.com/sebiboga/artsoft-consult-srl-nodejs-scraper/main/.github/workflows/job-seeker-ro-spider.yml"
 }

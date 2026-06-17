@@ -1,11 +1,7 @@
-# Update Repo About
+# Update GitHub Repo About
 
-## Description
-Scraper automat pentru locurile de muncă EPAM Systems International SRL (CIF: 33159615) — extrage din EPAM Careers API, validează via ANAF și publică pe peviitor.ro
+Folosește acest text pentru secțiunea "About" a repo-ului pe GitHub:
 
-## Topics (exactly 2, per TOPICS.md)
-- job-seeker-ro-spider
-- peviitor-ro
-
-## Workflow file
-`.github/workflows/job-seeker-ro-spider.yml`
+```
+Scraper automat pentru locurile de muncă ArtSoft Consult SRL (CIF: 15997630) — extrage din pagina de cariere ArtSoft Consult, validează via ANAF și publică pe peviitor.ro
+```
