@@ -105,7 +105,7 @@ describe('Integration: API Workflow', () => {
       const artsoft = result.docs[0];
       expect(artsoft.id).toBe(ARTSOFT_CIF);
       expect(artsoft.company).toBe('ARTSOFT CONSULT SRL');
-      expect(artsoft.brand).toBe('ArtSoft Consult');
+      expect(artsoft.brand).toBe('ARTSOFT CONSULT');
       expect(artsoft.status).toBe('activ');
       expect(Array.isArray(artsoft.location)).toBe(true);
       expect(artsoft.lastScraped).toMatch(/^\d{4}-\d{2}-\d{2}$/);
@@ -117,7 +117,7 @@ describe('Integration: API Workflow', () => {
 
       expect(artsoft).toHaveProperty('id', ARTSOFT_CIF);
       expect(artsoft).toHaveProperty('company');
-      expect(artsoft).toHaveProperty('brand', 'ArtSoft Consult');
+      expect(artsoft).toHaveProperty('brand', 'ARTSOFT CONSULT');
       expect(artsoft).toHaveProperty('status');
       expect(['activ', 'suspendat', 'inactiv', 'radiat']).toContain(artsoft.status);
       expect(artsoft).toHaveProperty('location');
@@ -209,7 +209,7 @@ describe('Integration: API Workflow', () => {
       expect(searchResults.length).toBeGreaterThan(0);
 
       const artsoftCompany = searchResults.find(c =>
-        c.name.toUpperCase().includes('ARTSOFT') && c.statusLabel === 'Funcțiune'
+        c.name.toUpperCase().includes('ARTSOFT CONSULT') && c.statusLabel === 'Funcțiune'
       );
       expect(artsoftCompany).toBeDefined();
 
