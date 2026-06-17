@@ -4,7 +4,7 @@ Thank you for your interest in contributing!
 
 ## 🌱 This Repo Is a Derived Scraper
 
-This repo is **derived from** [epam-systems-international-srl-nodejs-scraper](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper) — the reference implementation for Node.js job scrapers in the peviitor.ro ecosystem.
+This repo is **derived from** the [reference template](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper) — the reference implementation for Node.js job scrapers in the peviitor.ro ecosystem.
 
 ### 1. Update company identity
 

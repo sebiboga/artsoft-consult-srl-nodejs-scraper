@@ -1,6 +1,6 @@
 # TOPICS.md — Required GitHub Topics
 
-All scrapers derived from the EPAM template **MUST** have these two topics set on the GitHub repo:
+All scrapers derived from the reference template **MUST** have these two topics set on the GitHub repo:
 
 ## Required Topics
 

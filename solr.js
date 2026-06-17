@@ -121,7 +121,7 @@ export async function upsertCompany(companyDoc) {
 
 /**
  * Queries company data from Solr company core
- * @param {string} companyQuery - Solr query string (e.g., "company:EPAM*" or "id:33159615")
+ * @param {string} companyQuery - Solr query string (e.g., "company:ART_SOFT*" or "id:15997630")
  * @returns {Promise<Object>} - Solr response with company docs
  */
 export async function queryCompanySOLR(companyQuery) {

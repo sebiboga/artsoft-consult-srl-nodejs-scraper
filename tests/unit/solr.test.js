@@ -90,13 +90,13 @@ describe('solr.js', () => {
   describe('queryCompanySOLR', () => {
     it('should return company data', async () => {
       mockFetch.mockResolvedValue(makeSolrResponse(1, [
-        { id: '33159615', company: 'EPAM SYSTEMS INTERNATIONAL SRL', brand: 'EPAM' }
+        { id: '15997630', company: 'ARTSOFT CONSULT SRL', brand: 'ArtSoft Consult' }
       ]));
 
       const result = await solr.queryCompanySOLR('id:33159615');
 
       expect(result.numFound).toBe(1);
-      expect(result.docs[0].brand).toBe('EPAM');
+      expect(result.docs[0].brand).toBe('ArtSoft Consult');
     });
 
     it('should return empty when company not found', async () => {

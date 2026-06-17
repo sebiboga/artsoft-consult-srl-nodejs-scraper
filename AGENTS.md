@@ -4,10 +4,10 @@
 ArtSoft Consult scraper for peviitor.ro (Node.js, ESM, Jest)
 
 ## 🌱 This Repo Is a Derived Scraper
-This repo is **derived from** [job_seeker_ro_spider](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper) — the EPAM template that is the reference implementation for the peviitor.ro ecosystem. When making changes:
+This repo is **derived from** the [reference template](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper) — the reference implementation for the peviitor.ro ecosystem. When making changes:
 - **All company-specific identity lives in `config/company.json`** (CIF, brand, legalName, URLs). Read from `config/company.js` in Node code, or via `jq` in workflows. Never hardcode in source files.
 - **The ArtSoft Consult-specific scraping logic is in `index.js`** (`fetchJobsHtml`, `parseHtmlJobs`). Uses HTML scraping with cheerio on `div.single-job-container`. The output shape (`mapToJobModel`, `transformJobsForSOLR`) is inherited from the template and must NOT change — that's what keeps SOLR uniform across derived scrapers.
-- **Structural changes** (pipeline, caching, tests architecture) should be discussed upstream in the EPAM template repo first, so all derivatives benefit.
+- **Structural changes** (pipeline, caching, tests architecture) should be discussed upstream in the reference template repo first, so all derivatives benefit.
 
 ## Critical Rules
 

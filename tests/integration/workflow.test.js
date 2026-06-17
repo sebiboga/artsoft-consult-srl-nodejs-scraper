@@ -57,7 +57,7 @@ describe('Integration: API Workflow', () => {
 
       expect(data).toBeDefined();
       expect(data.cui).toBe(15997630);
-      expect(data.name).toBe('ART SOFT CONSULT SRL');
+      expect(data.name).toBe('ARTSOFT CONSULT SRL');
       expect(data).toHaveProperty('address');
       expect(data).toHaveProperty('registrationNumber');
       expect(data).toHaveProperty('caenCode');
@@ -70,7 +70,7 @@ describe('Integration: API Workflow', () => {
     }, 60000);
 
     it('should use cached data when API fails (getCompanyFromANAFWithFallback)', async () => {
-      const cached = { cui: 15997630, name: 'ART SOFT CONSULT SRL' };
+      const cached = { cui: 15997630, name: 'ARTSOFT CONSULT SRL' };
 
       const data = await anaf.getCompanyFromANAFWithFallback(ARTSOFT_CIF, cached);
 
@@ -104,7 +104,7 @@ describe('Integration: API Workflow', () => {
       expect(result.numFound).toBe(1);
       const artsoft = result.docs[0];
       expect(artsoft.id).toBe(ARTSOFT_CIF);
-      expect(artsoft.company).toBe('ART SOFT CONSULT SRL');
+      expect(artsoft.company).toBe('ARTSOFT CONSULT SRL');
       expect(artsoft.brand).toBe('ArtSoft Consult');
       expect(artsoft.status).toBe('activ');
       expect(Array.isArray(artsoft.location)).toBe(true);
@@ -163,7 +163,7 @@ describe('Integration: API Workflow', () => {
       const job = result.docs[0];
       expect(job).toHaveProperty('url');
       expect(job).toHaveProperty('title');
-      expect(job).toHaveProperty('company', 'ART SOFT CONSULT SRL');
+      expect(job).toHaveProperty('company', 'ARTSOFT CONSULT SRL');
       expect(job).toHaveProperty('cif', ARTSOFT_CIF);
       expect(job).toHaveProperty('status');
       expect(job).toHaveProperty('location');
@@ -214,7 +214,7 @@ describe('Integration: API Workflow', () => {
       expect(artsoftCompany).toBeDefined();
 
       const anafData = await anaf.getCompanyFromANAF(artsoftCompany.cui.toString());
-      expect(anafData.name).toBe('ART SOFT CONSULT SRL');
+      expect(anafData.name).toBe('ARTSOFT CONSULT SRL');
       expect(anafData.inactive).toBe(false);
     }, 30000);
 
@@ -225,14 +225,14 @@ describe('Integration: API Workflow', () => {
       const solrResult = await solrObj.queryCompanySOLR(`id:${ARTSOFT_CIF}`);
       expect(solrResult.numFound).toBe(1);
       expect(solrResult.docs[0].id).toBe(ARTSOFT_CIF);
-      expect(solrResult.docs[0].company).toBe('ART SOFT CONSULT SRL');
+      expect(solrResult.docs[0].company).toBe('ARTSOFT CONSULT SRL');
     }, 30000);
 
     itIfSolr('should validate company and query SOLR for existing jobs', async () => {
       const companyResult = await companyModule.validateAndGetCompany();
 
       expect(companyResult.status).toBe('active');
-      expect(companyResult.company).toBe('ART SOFT CONSULT SRL');
+      expect(companyResult.company).toBe('ARTSOFT CONSULT SRL');
       expect(companyResult.cif).toBe(ARTSOFT_CIF);
 
       if (companyResult.existingJobsCount === 0) {

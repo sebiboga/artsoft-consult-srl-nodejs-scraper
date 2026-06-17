@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Work mode normalization
 
 ### Derived From
-- epam-systems-international-srl-nodejs-scraper (EPAM template)
+- epam-systems-international-srl-nodejs-scraper (reference template)
 
 ## License
 

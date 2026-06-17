@@ -15,7 +15,7 @@
 
 **job_seeker_ro_spider** — un scraper pentru job-urile ArtSoft Consult din România. Extrage anunțurile de pe [ArtSoft Consult careers](https://www.artsoft-consult.ro/careers/job-openings) și le publică în [peviitor.ro](https://peviitor.ro) prin API-ul SOLR.
 
-> **🌱 Derived scraper.** Acest repo este **derivat** din [epam-systems-international-srl-nodejs-scraper](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper) — template-ul de referință pentru ecosistemul peviitor.ro. Consultă [CONTRIBUTING.md](CONTRIBUTING.md) pentru detalii despre derivare.
+> **🌱 Derived scraper.** Acest repo este **derivat** din [template-ul de referință](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper) — template-ul de referință pentru ecosistemul peviitor.ro. Consultă [CONTRIBUTING.md](CONTRIBUTING.md) pentru detalii despre derivare.
 
 ## Overview
 
@@ -128,7 +128,7 @@ npm run test:e2e
 
 ## Derived From
 
-Acest scraper este derivat din [epam-systems-international-srl-nodejs-scraper](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper), template-ul de referință pentru toate scraper-ele Node.js din ecosistemul peviitor.ro.
+Acest scraper este derivat din [template-ul de referință](https://github.com/sebiboga/epam-systems-international-srl-nodejs-scraper), template-ul de referință pentru toate scraper-ele Node.js din ecosistemul peviitor.ro.
 
 Pentru a deriva un scraper nou, urmează [CONTRIBUTING.md](CONTRIBUTING.md).
 
