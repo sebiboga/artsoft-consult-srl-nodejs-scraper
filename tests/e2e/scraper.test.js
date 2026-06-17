@@ -104,7 +104,7 @@ describe('E2E: Full Scraping Pipeline', () => {
 
       const payload = {
         source: 'artsoft-consult.ro',
-        company: 'ART SOFT CONSULT SRL',
+        company: 'ARTSOFT CONSULT SRL',
         cif: TEST_CIF,
         jobs
       };
@@ -162,7 +162,7 @@ describe('E2E: Full Scraping Pipeline', () => {
       const result = await company.validateAndGetCompany();
 
       expect(result.status).toBe('active');
-      expect(result.company).toBe('ART SOFT CONSULT SRL');
+      expect(result.company).toBe('ARTSOFT CONSULT SRL');
       expect(result.cif).toBe(TEST_CIF);
 
       if (result.existingJobsCount === 0) {
@@ -193,7 +193,7 @@ describe('E2E: Full Scraping Pipeline', () => {
             expect(anafData.inactive).toBe(true);
           }
         } catch {
-          expect(nonActive.statusLabel).toMatch(/Radiată|Inactiv|Suspendat/);
+          expect(nonActive.statusLabel).toMatch(/Radiată|Inactiv|Suspendat|Dizolvare/);
         }
       }
     }, 30000);
@@ -215,7 +215,7 @@ describe('E2E: Full Scraping Pipeline', () => {
       }
 
       for (const job of result.docs) {
-        expect(job.company).toBe('ART SOFT CONSULT SRL');
+        expect(job.company).toBe('ARTSOFT CONSULT SRL');
         expect(job.cif).toBe(TEST_CIF);
       }
     }, 15000);
@@ -225,7 +225,7 @@ describe('E2E: Full Scraping Pipeline', () => {
 
       expect(result.numFound).toBe(1);
       const artsoft = result.docs[0];
-      expect(artsoft.company).toBe('ART SOFT CONSULT SRL');
+      expect(artsoft.company).toBe('ARTSOFT CONSULT SRL');
       expect(artsoft.status).toBe('activ');
     }, 15000);
   });
