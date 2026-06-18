@@ -10,11 +10,11 @@
 | Location | JUD. CLUJ, MUN. CLUJ-NAPOCA, STR. EUGEN IONESCO, NR.1A |
 | Website | [https://www.artsoft-consult.ro](https://www.artsoft-consult.ro) |
 | Careers | [https://www.artsoft-consult.ro/careers/job-openings](https://www.artsoft-consult.ro/careers/job-openings) |
-| Last Scraped | 2026-06-17 |
+| Last Scraped | 2026-06-18 |
 
-## Current Job Listings (2)
+## Current Job Listings (3)
 
-_Generated: 2026-06-17T17:44:06.890Z_
+_Generated: 2026-06-18T10:41:04.423Z_
 
 ### WPF C# .NET developer
 
@@ -28,4 +28,12 @@ _Generated: 2026-06-17T17:44:06.890Z_
 - **URL:** [https://www.artsoft-consult.ro/careers/job-openings/qa-engineer-automation-and-manual-with-python](https://www.artsoft-consult.ro/careers/job-openings/qa-engineer-automation-and-manual-with-python)
 - **Work Mode:** on-site
 - **Location:** Cluj-Napoca
+- **Status:** scraped
+
+### Internship
+
+- **URL:** [https://www.artsoft-consult.ro/contact/internship-cv](https://www.artsoft-consult.ro/contact/internship-cv)
+- **Work Mode:** on-site
+- **Location:** Cluj-Napoca
+- **Tags:** internship
 - **Status:** scraped
