@@ -10,11 +10,11 @@
 | Location | EUGEN IONESCO, 1A, Municipiul Cluj-Napoca, Cluj |
 | Website | [https://www.artsoft-consult.ro](https://www.artsoft-consult.ro) |
 | Careers | [https://www.artsoft-consult.ro/careers/job-openings](https://www.artsoft-consult.ro/careers/job-openings) |
-| Last Scraped | 2026-06-25 |
+| Last Scraped | 2026-06-26 |
 
 ## Current Job Listings (3)
 
-_Generated: 2026-06-25T09:34:44.587Z_
+_Generated: 2026-06-26T09:39:45.598Z_
 
 ### WPF C# .NET developer
 
