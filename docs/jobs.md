@@ -14,7 +14,7 @@
 
 ## Current Job Listings (1)
 
-_Generated: 2026-06-27T13:40:32.417Z_
+_Generated: 2026-06-27T13:42:52.185Z_
 
 ### Internship
 
