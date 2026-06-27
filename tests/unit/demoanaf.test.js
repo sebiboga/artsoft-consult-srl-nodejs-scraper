@@ -64,7 +64,7 @@ describe('src/anaf.js', () => {
   describe('searchCompany', () => {
     it('should return array of companies for valid brand', async () => {
       mockFetch.mockResolvedValue(anafSearchResponse([
-        { cui: 33159615, name: 'EPAM SYSTEMS INTERNATIONAL SRL', statusLabel: 'Funcțiune' }
+        { cui: 15997630, name: 'ARTSOFT CONSULT SRL', statusLabel: 'Funcțiune' }
       ]));
 
       const results = await anaf.searchCompany('ArtSoft');
