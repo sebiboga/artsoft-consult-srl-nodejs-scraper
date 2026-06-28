@@ -10,11 +10,11 @@
 | Location | EUGEN IONESCO, 1A, Municipiul Cluj-Napoca, Cluj |
 | Website | [https://www.artsoft-consult.ro](https://www.artsoft-consult.ro) |
 | Careers | [https://www.artsoft-consult.ro/careers/job-openings](https://www.artsoft-consult.ro/careers/job-openings) |
-| Last Scraped | 2026-06-27 |
+| Last Scraped | 2026-06-28 |
 
 ## Current Job Listings (1)
 
-_Generated: 2026-06-27T13:42:52.185Z_
+_Generated: 2026-06-28T09:20:57.927Z_
 
 ### Internship
 
